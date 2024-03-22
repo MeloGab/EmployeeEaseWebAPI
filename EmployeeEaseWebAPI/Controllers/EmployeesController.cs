@@ -16,12 +16,18 @@ namespace EmployeeEaseWebAPI.Controllers
             _employeeInterface = employeeInterface;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> GetEmployees()
         {
             return Ok(await _employeeInterface.GetEmployees());
         }
 
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> CreateEmployees(EmployeesModel newEmployee)
+        {
+            return Ok(await _employeeInterface.CreateEmployees(newEmployee));
+        }
 
     }
 }
