@@ -40,6 +40,13 @@ namespace EmployeeEaseWebAPI.Controllers
         }
 
 
+        [HttpPut("InativaFuncionario")]
+        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> InactiveEmployee(int id)
+        {
+            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeeInterface.InactiveEmployee(id);
+
+            return Ok(serviceResponse);
+        }
 
     }
 }
