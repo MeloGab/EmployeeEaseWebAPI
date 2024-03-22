@@ -39,6 +39,15 @@ namespace EmployeeEaseWebAPI.Controllers
             return Ok(await _employeeInterface.CreateEmployees(newEmployee));
         }
 
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> UpdateEmployees(EmployeesModel updateEmployee)
+        {
+            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeeInterface.UpdateEmployees(updateEmployee);
+
+            return Ok(serviceResponse);
+        }
+
+
 
         [HttpPut("InativaFuncionario")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> InactiveEmployee(int id)
