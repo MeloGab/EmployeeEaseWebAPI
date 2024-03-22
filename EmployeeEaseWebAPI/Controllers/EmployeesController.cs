@@ -48,7 +48,6 @@ namespace EmployeeEaseWebAPI.Controllers
         }
 
 
-
         [HttpPut("InativaFuncionario")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> InactiveEmployee(int id)
         {
@@ -56,6 +55,15 @@ namespace EmployeeEaseWebAPI.Controllers
 
             return Ok(serviceResponse);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> DeleteEmployee(int id)
+        {
+            ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeeInterface.DeleteEmployee(id);
+
+            return Ok(serviceResponse);
+        }
+
 
     }
 }

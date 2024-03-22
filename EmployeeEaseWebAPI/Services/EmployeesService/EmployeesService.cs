@@ -41,9 +41,35 @@ namespace EmployeeEaseWebAPI.Services.EmployeesService
             return serviceResponse;
         }
 
-        public Task<ServiceResponse<List<EmployeesModel>>> DeleteEmployee(int id)
+        public async Task<ServiceResponse<List<EmployeesModel>>> DeleteEmployee(int id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<EmployeesModel>> serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+
+            try
+            {
+                EmployeesModel employee = _context.Employees.FirstOrDefault(x => x.id == id);
+
+                if (employee == null)
+                {
+                    serviceResponse.Status = null;
+                    serviceResponse.Message = "Usuario não encontrado";
+                    serviceResponse.Success = false;
+                }
+
+                _context.Employees.Remove(employee);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Status = _context.Employees.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
+
         }
 
         public async Task<ServiceResponse<EmployeesModel>> GetEmployeeById(int id)
