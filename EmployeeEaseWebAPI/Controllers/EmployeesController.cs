@@ -23,11 +23,23 @@ namespace EmployeeEaseWebAPI.Controllers
             return Ok(await _employeeInterface.GetEmployees());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<EmployeesModel>>> GetEmployeeById(int id)
+        {
+
+            ServiceResponse<EmployeesModel> serviceResponse = await _employeeInterface.GetEmployeeById(id);
+
+            return Ok(serviceResponse);
+
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> CreateEmployees(EmployeesModel newEmployee)
         {
             return Ok(await _employeeInterface.CreateEmployees(newEmployee));
         }
+
+
 
     }
 }

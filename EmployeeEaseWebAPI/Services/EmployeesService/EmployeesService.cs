@@ -45,9 +45,32 @@ namespace EmployeeEaseWebAPI.Services.EmployeesService
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResponse<EmployeesModel>> GetEmployeeById(int id)
+        public async Task<ServiceResponse<EmployeesModel>> GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            ServiceResponse<EmployeesModel> serviceResponse = new ServiceResponse<EmployeesModel>();
+
+            try
+            {
+                EmployeesModel employee = _context.Employees.FirstOrDefault(x => x.id == id);
+
+                if(employee == null)
+                {
+                    serviceResponse.Status = null;
+                    serviceResponse.Message = "Usuario não encontrado";
+                    serviceResponse.Success = false;
+                }
+
+                serviceResponse.Status = employee;
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
+
         }
 
         public async Task<ServiceResponse<List<EmployeesModel>>> GetEmployees()
