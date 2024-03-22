@@ -12,9 +12,32 @@ namespace EmployeeEaseWebAPI.Services.EmployeesService
             _context = context;
         }
 
-        public Task<ServiceResponse<List<EmployeesModel>>> CreateEmployees(EmployeesModel newEmplyee)
+        public async Task<ServiceResponse<List<EmployeesModel>>> CreateEmployees(EmployeesModel newEmployee)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<EmployeesModel>> serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+
+            try
+            {
+                if (newEmployee == null)
+                {
+                    serviceResponse.Status = null;
+                    serviceResponse.Message = "Informar dados";
+                    serviceResponse.Success = false;
+
+                    return serviceResponse;
+                }
+                _context.Add(newEmployee);
+                await _context.SaveChangesAsync();
+                serviceResponse.Status = _context.Employees.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
         }
 
         public Task<ServiceResponse<List<EmployeesModel>>> DeleteEmployee(int id)
