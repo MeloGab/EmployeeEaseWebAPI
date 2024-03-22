@@ -1,5 +1,8 @@
-﻿namespace EmployeesEaseWebAPI.Enum
+﻿using System.Text.Json.Serialization;
+
+namespace EmployeesEaseWebAPI.Enum
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum DepartureEnum
     {
         HR = 0,

@@ -1,6 +1,7 @@
 ﻿using EmployeeEaseWebAPI.DataContext;
 using EmployeeEaseWebAPI.Models;
 using EmployeesEaseWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeEaseWebAPI.Services.EmployeesService
 {
@@ -129,9 +130,36 @@ namespace EmployeeEaseWebAPI.Services.EmployeesService
 
         }
 
-        public Task<ServiceResponse<List<EmployeesModel>>> UpdateEmployees(EmployeesModel updateEmployee)
+        public async Task<ServiceResponse<List<EmployeesModel>>> UpdateEmployees(EmployeesModel updateEmployee)
         {
-            throw new NotImplementedException();
+            ServiceResponse<List<EmployeesModel>> serviceResponse = new ServiceResponse<List<EmployeesModel>>();
+
+            try
+            {
+                EmployeesModel employee = _context.Employees.AsNoTracking().FirstOrDefault(x => x.id == updateEmployee.id);
+
+                if (employee == null)
+                {
+                    serviceResponse.Status = null;
+                    serviceResponse.Message = "Usuario não encontrado";
+                    serviceResponse.Success = false;
+                }
+
+                employee.UpdateDate = DateTime.Now.ToLocalTime();
+
+                _context.Employees.Update(updateEmployee);
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Status = _context.Employees.ToList();
+
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.Message = ex.Message;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
         }
     }
 }
