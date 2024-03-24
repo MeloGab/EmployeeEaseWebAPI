@@ -6,6 +6,8 @@ namespace EmployeesEaseWebAPI.Models
 {
     public class EmployeesModel
     {
+        #region Properties
+
         [Key]
         public int id { get; set; }
         public string Name { get; set; }
@@ -15,5 +17,8 @@ namespace EmployeesEaseWebAPI.Models
         public ShiiftWorkEnum ShiftWork { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now.ToLocalTime();
         public DateTime UpdateDate { get; set; } = DateTime.Now.ToLocalTime();
+       
+        #endregion
+
     }
 }

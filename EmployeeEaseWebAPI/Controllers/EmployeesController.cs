@@ -10,20 +10,33 @@ namespace EmployeeEaseWebAPI.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
+
+        #region Fields
+
         private readonly IEmployeeInterface _employeeInterface;
+
+        #endregion
+
+
+        #region Contructor
+
         public EmployeesController(IEmployeeInterface employeeInterface)
         {
             _employeeInterface = employeeInterface;
         }
 
+        #endregion
 
-        [HttpGet]
+
+        #region EndPoints
+
+        [HttpGet("BuscaFuncionarios")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> GetEmployees()
         {
             return Ok(await _employeeInterface.GetEmployees());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("BuscaFuncionario{id}")]
         public async Task<ActionResult<ServiceResponse<EmployeesModel>>> GetEmployeeById(int id)
         {
 
@@ -33,13 +46,13 @@ namespace EmployeeEaseWebAPI.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost("CriaFuncionario")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> CreateEmployees(EmployeesModel newEmployee)
         {
             return Ok(await _employeeInterface.CreateEmployees(newEmployee));
         }
 
-        [HttpPut]
+        [HttpPut("AlteraFuncionario")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> UpdateEmployees(EmployeesModel updateEmployee)
         {
             ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeeInterface.UpdateEmployees(updateEmployee);
@@ -56,7 +69,7 @@ namespace EmployeeEaseWebAPI.Controllers
             return Ok(serviceResponse);
         }
 
-        [HttpDelete]
+        [HttpDelete("DeletaFuncionario")]
         public async Task<ActionResult<ServiceResponse<List<EmployeesModel>>>> DeleteEmployee(int id)
         {
             ServiceResponse<List<EmployeesModel>> serviceResponse = await _employeeInterface.DeleteEmployee(id);
@@ -64,6 +77,7 @@ namespace EmployeeEaseWebAPI.Controllers
             return Ok(serviceResponse);
         }
 
+        #endregion
 
     }
 }
